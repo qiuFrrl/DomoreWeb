@@ -2,7 +2,7 @@ import WifiForm from "../components/WifiForm";
 
 export default function WifiPage({ setPage }) {
   return (
-    <div className="min-h-screen bg-gray-950 text-white p-6">
+   <div className="min-h-screen bg-gray-950 text-white flex items-center justify-center px-4">
       
       <button
         className="text-blue-400 mb-6 hover:underline"
