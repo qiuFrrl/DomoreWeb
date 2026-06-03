@@ -8,7 +8,7 @@ export default function MenuPage({ setPage }) {
         ROBODESK
       </h1>
 
-      <div className="flex gap-6">
+      <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-center justify-center px-4">
         <MenuCard
           title="INPUT WIFI"
           subtitle="Configure robot connection"

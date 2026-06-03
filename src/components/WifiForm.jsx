@@ -6,7 +6,7 @@ export default function WifiForm() {
 
   const send = () => {
     if (!ssid || !password) {
-      alert("Isi WiFi dulu!");
+      alert("Isi WiFi dulu yea ok!");
       return;
     }
 
@@ -45,7 +45,7 @@ export default function WifiForm() {
         onClick={send}
         className="w-full bg-green-500 hover:bg-green-400 transition py-3 rounded-lg font-semibold"
       >
-        SEND TO ROBOT
+        SEND TO DOMORE
       </button>
 
     </div>
