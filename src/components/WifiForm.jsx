@@ -16,12 +16,10 @@ export default function WifiForm() {
   return (
     <div className="w-full max-w-sm bg-gray-800/80 backdrop-blur-md p-6 rounded-2xl shadow-2xl border border-gray-700">
 
-      {/* HEADER */}
       <h2 className="text-xl font-bold text-center mb-6">
         Connect Robot WiFi
       </h2>
 
-      {/* SSID */}
       <div className="mb-4">
         <label className="text-sm text-gray-300">WiFi Name</label>
         <input
@@ -32,7 +30,6 @@ export default function WifiForm() {
         />
       </div>
 
-      {/* PASSWORD */}
       <div className="mb-6">
         <label className="text-sm text-gray-300">Password</label>
         <input
@@ -44,7 +41,6 @@ export default function WifiForm() {
         />
       </div>
 
-      {/* BUTTON */}
       <button
         onClick={send}
         className="w-full bg-green-500 hover:bg-green-400 transition py-3 rounded-lg font-semibold"
