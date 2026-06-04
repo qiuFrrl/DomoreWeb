@@ -27,12 +27,10 @@ export default function DomorePage({ setPage }) {
   return (
     <div className="min-h-screen bg-black text-white relative overflow-hidden flex items-center justify-center px-4">
 
-      {/* BACKGROUND GLOW */}
       <div className="absolute w-[500px] h-[500px] bg-cyan-500/20 blur-3xl rounded-full top-[-150px] left-[-150px]" />
 
       <div className="absolute w-[400px] h-[400px] bg-purple-500/20 blur-3xl rounded-full bottom-[-100px] right-[-100px]" />
 
-      {/* BACK BUTTON */}
       <button
         onClick={() => setPage("menu")}
         className="absolute top-5 left-5 text-sm text-gray-400 hover:text-white transition"
@@ -40,10 +38,8 @@ export default function DomorePage({ setPage }) {
         ← Back
       </button>
 
-      {/* MAIN CARD */}
       <div className="relative z-10 w-full max-w-md bg-white/10 backdrop-blur-xl border border-white/10 rounded-3xl shadow-2xl p-8">
 
-        {/* TITLE */}
         <div className="text-center mb-8">
 
           <h1 className="text-4xl font-black tracking-wide bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
@@ -56,7 +52,6 @@ export default function DomorePage({ setPage }) {
 
         </div>
 
-        {/* INPUT SECTION */}
         <div className="mb-6">
 
           <label className="text-sm text-gray-300">
@@ -86,7 +81,6 @@ export default function DomorePage({ setPage }) {
 
         </div>
 
-        {/* BUTTON */}
         <button
           onClick={saveNickname}
           className="
@@ -108,9 +102,8 @@ export default function DomorePage({ setPage }) {
           SAVE ROBOT
         </button>
 
-        {/* INFO */}
         <div className="mt-6 text-center text-sm text-gray-500">
-          Your robot nickname will be stored in realtime cloud database.
+          Your robot nickname will be stored in realtime cloud database. Dont input again.
         </div>
 
       </div>
