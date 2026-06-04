@@ -17,7 +17,7 @@ export default function TalkPage({
 
     ctx.lineWidth = 4;
     ctx.lineCap = "round";
-    ctx.strokeStyle = "#00ffff";
+    ctx.strokeStyle = "#ffffff";
   }, []);
 
   const startDraw = (e) => {
