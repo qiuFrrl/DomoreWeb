@@ -12,16 +12,16 @@ export default function DomorePage({ setPage, setRobotNickname }) {
     const cleanNick = nickname.trim();
     const cleanCode = pairCode.trim();
 
-    const allRobotsSnap = await get(ref(db, "robot"));
+    const allRobotSnap = await get(ref(db, "robot"));
 
-    const allRobots = allRobotsSnap.exists()
-      ? allRobotsSnap.val()
+    const allRobot = allRobotSnap.exists()
+      ? allRobotSnap.val()
       : {};
 
     let nickExists = false;
     let codeExists = false;
 
-    Object.values(allRobots).forEach((robot) => {
+    Object.values(allRobot).forEach((robot) => {
       if (robot.nickname === cleanNick) {
         nickExists = true;
       }
