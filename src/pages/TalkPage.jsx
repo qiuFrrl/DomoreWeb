@@ -35,28 +35,32 @@ export default function TalkPage({
   };
 
   const draw = (e) => {
-    if (!drawing) return;
+  if (!drawing) return;
 
-    const canvas = canvasRef.current;
+  const canvas = canvasRef.current;
 
-    const rect = canvas.getBoundingClientRect();
+  const rect = canvas.getBoundingClientRect();
 
-    const ctx = canvas.getContext("2d");
+  const scaleX = canvas.width / rect.width;
 
-    ctx.lineTo(
-      e.clientX - rect.left,
-      e.clientY - rect.top
-    );
+  const scaleY = canvas.height / rect.height;
 
-    ctx.stroke();
+  const x =
+    (e.clientX - rect.left) * scaleX;
 
-    ctx.beginPath();
+  const y =
+    (e.clientY - rect.top) * scaleY;
 
-    ctx.moveTo(
-      e.clientX - rect.left,
-      e.clientY - rect.top
-    );
-  };
+  const ctx = canvas.getContext("2d");
+
+  ctx.lineTo(x, y);
+
+  ctx.stroke();
+
+  ctx.beginPath();
+
+  ctx.moveTo(x, y);
+};
 
   const clearCanvas = () => {
     const canvas = canvasRef.current;
