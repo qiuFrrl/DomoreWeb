@@ -192,23 +192,40 @@ export default function TalkPage({
             "
           >
 
-            <canvas
-              ref={canvasRef}
-              width={1000}
-              height={500}
-              className="
+         <canvas
+            ref={canvasRef}
+            width={1000}
+            height={500}
+            className="
                 w-full
                 h-[300px]
                 sm:h-[400px]
                 md:h-[500px]
                 touch-none
                 cursor-crosshair
-              "
-              onMouseDown={startDraw}
-              onMouseUp={endDraw}
-              onMouseMove={draw}
-              onMouseLeave={endDraw}
-            />
+            "
+            onMouseDown={startDraw}
+            onMouseUp={endDraw}
+            onMouseMove={draw}
+            onMouseLeave={endDraw}
+            onTouchStart={(e) => {
+            const touch = e.touches[0];
+
+            startDraw({
+                clientX: touch.clientX,
+                clientY: touch.clientY,
+            });
+            }}
+            onTouchMove={(e) => {
+            const touch = e.touches[0];
+
+            draw({
+                clientX: touch.clientX,
+                clientY: touch.clientY,
+            });
+            }}
+            onTouchEnd={endDraw}
+        />
 
           </div>
 
