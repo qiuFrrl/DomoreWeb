@@ -101,6 +101,27 @@ export default function DomorePage({
         shadow-2xl
       ">
 
+      <button
+        onClick={() => setPage("menu")}
+        className="
+        absolute
+        top-5
+        left-5
+        px-4
+        py-2
+        rounded-full
+        bg-white/10
+        border border-white/10
+        text-sm
+        text-gray-300
+        hover:bg-white/20
+        hover:text-white
+        transition
+        z-20
+      ">
+        Back
+      </button>
+
         <div className="mb-10 text-center">
 
           <h1 className="
