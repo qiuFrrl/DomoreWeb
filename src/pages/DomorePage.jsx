@@ -7,45 +7,27 @@ export default function DomorePage({ setPage, setRobotNickname }) {
   const [pairCode, setPairCode] = useState("");
 
   const pairAndEnter = async () => {
-  if (!nickname || !pairCode) return alert("Fill all fields");
+    if (!nickname || !pairCode) return alert("Fill all fields");
 
-  const cleanNick = nickname.trim();
-  const cleanCode = pairCode.trim();
+    const cleanNick = nickname.trim();
+    const cleanCode = pairCode.trim();
 
-  const robotRef = ref(db, `robot/${cleanNick}`);
-  const robotSnap = await get(robotRef);
-  
-  if (robotSnap.exists()) {
-    const data = robotSnap.val();
+    const robotRef = ref(db, `robot/${cleanNick}`);
+    const robotSnap = await get(robotRef);
 
-    if (data.pairedWith !== cleanCode) {
-      return alert("Pairing code salah untuk robot ini");
+    if (robotSnap.exists()) {
+      const data = robotSnap.val();
+
+      if (data.pairedWith !== cleanCode) {
+        return alert("Pairing code salah untuk robot ini");
+      }
+
+      setRobotNickname(cleanNick);
+      setPage("talk");
+      return;
     }
 
-    setRobotNickname(cleanNick);
-    setPage("talk");
-    return;
-  }
-
-  await set(robotRef, {
-    nickname: cleanNick,
-    status: "online",
-    pairedWith: cleanCode,
-  });
-
-  setRobotNickname(cleanNick);
-  setPage("talk");
-};
-
-    if (nickExists) {
-      return alert("Nickname sudah ada, gunakan yang lain");
-    }
-
-    if (codeExists) {
-      return alert("Code sudah dipakai, gunakan yang lain");
-    }
-
-    await set(ref(db, `robot/${cleanNick}`), {
+    await set(robotRef, {
       nickname: cleanNick,
       status: "online",
       pairedWith: cleanCode,
