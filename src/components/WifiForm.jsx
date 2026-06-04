@@ -1,17 +1,28 @@
+import { ref, set } from "firebase/database";
+import { db } from "../firebase";
 import { useState } from "react";
 
 export default function WifiForm() {
   const [ssid, setSsid] = useState("");
   const [password, setPassword] = useState("");
 
-  const send = () => {
-    if (!ssid || !password) {
-      alert("Isi WiFi dulu yea ok!");
-      return;
-    }
+  const send = async () => {
+  if (!ssid || !password) {
+    alert("Isi WiFi dulu yea ok!");
+    return;
+  }
 
-    alert(`Sending to ROBOT:\nSSID: ${ssid}\nPASSWORD: ${password}`);
-  };
+  try {
+    await set(ref(db, "robot/wifi"), {
+      ssid: ssid,
+      password: password,
+    });
+
+    alert("WiFi berhasil disimpan");
+  } catch (error) {
+    alert("Error: " + error.message);
+  }
+};
 
   return (
     <div className="w-full max-w-sm bg-gray-800/80 backdrop-blur-md p-6 rounded-2xl shadow-2xl border border-gray-700">
