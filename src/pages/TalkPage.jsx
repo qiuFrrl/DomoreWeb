@@ -96,7 +96,7 @@ export default function TalkPage({
               text-sm md:text-base
             "
           >
-            ← Back
+             Back
           </button>
 
           <div className="text-right">
