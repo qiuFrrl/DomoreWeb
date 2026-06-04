@@ -22,11 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-VITE_FIREBASE_API_KEY= "AIzaSyDIXptVGz02ekvAdId0LqGbmY6ORRBZYaA"
-VITE_FIREBASE_AUTH_DOMAIN= "domore-154cc.firebaseapp.com"
-VITE_FIREBASE_DATABASE_URL= "https://domore-154cc-default-rtdb.asia-southeast1.firebasedatabase.app"
-VITE_FIREBASE_PROJECT_ID= "domore-154cc"
-VITE_FIREBASE_STORAGE_BUCKET= "domore-154cc.firebasestorage.app"
-VITE_FIREBASE_MESSAGING_SENDER_ID= "67408089829"
+VITE_FIREBASE_API_KEY = "AIzaSyDIXptVGz02ekvAdId0LqGbmY6ORRBZYaA"
+VITE_FIREBASE_AUTH_DOMAIN = "domore-154cc.firebaseapp.com"
+VITE_FIREBASE_DATABASE_URL = "https://domore-154cc-default-rtdb.asia-southeast1.firebasedatabase.app"
+VITE_FIREBASE_PROJECT_ID = "domore-154cc"
+VITE_FIREBASE_STORAGE_BUCKET = "domore-154cc.firebasestorage.app"
+VITE_FIREBASE_MESSAGING_SENDER_ID = "67408089829"
 VITE_FIREBASE_APP_ID= "1:67408089829:web:4fb049ab3a99f7bb8ffa0c"
 .env
