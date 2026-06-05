@@ -12,7 +12,7 @@ export default function TalkPage({ setPage, robotNickname }) {
 
     ctx.lineWidth = 4;
     ctx.lineCap = "round";
-    ctx.strokeStyle = "#00ffff";
+    ctx.strokeStyle = "#feffff";
   }, []);
 
   const startDraw = (e) => {
