@@ -19,8 +19,11 @@ export default function WifiForm() {
         if (duplikat) return alert("WiFi ini sudah tersimpan");
       }
 
-      const newRef = ref(db, `robot/wifi/${ssid}`);
-      await set(newRef, { ssid, password });
+      await set(ref(db, `robot/wifi/${ssid}`), {
+        ssid,
+        password,
+        updatedAt: Date.now(),
+      });
 
       alert("WiFi berhasil disimpan");
     } catch (error) {

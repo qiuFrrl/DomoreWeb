@@ -113,6 +113,7 @@ export default function TalkPage({ setPage, robotNickname }) {
         pixels,
         width: 128,
         height: 64,
+        updatedAt: Date.now(),
       });
 
       alert("Drawing sent!");
@@ -122,9 +123,9 @@ export default function TalkPage({ setPage, robotNickname }) {
   };
 
   const statusConfig = {
-    online:   { label: "Online",        dot: "bg-green-400",  text: "text-green-400"  },
-    offline:  { label: "Offline",       dot: "bg-red-400",    text: "text-red-400"    },
-    notfound: { label: "Tidak ditemukan", dot: "bg-gray-400", text: "text-gray-400"   },
+    online:   { label: "Online",         dot: "bg-green-400", text: "text-green-400" },
+    offline:  { label: "Offline",        dot: "bg-red-400",   text: "text-red-400"   },
+    notfound: { label: "Tidak ditemukan", dot: "bg-gray-400", text: "text-gray-400"  },
   };
 
   return (

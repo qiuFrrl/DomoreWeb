@@ -15,6 +15,7 @@ export default function DomorePage({ setPage, setRobotNickname }) {
     const snap = await get(ref(db, `robot/account`));
     if (snap.exists()) {
       const allAccounts = Object.values(snap.val());
+
       const duplikat = allAccounts.find(
         (a) => a.nickname === cleanNick && a.pairedWith === cleanCode
       );
@@ -39,6 +40,7 @@ export default function DomorePage({ setPage, setRobotNickname }) {
       nickname: cleanNick,
       status: "offline",
       pairedWith: cleanCode,
+      updatedAt: Date.now(),
     });
 
     setRobotNickname(cleanNick);
