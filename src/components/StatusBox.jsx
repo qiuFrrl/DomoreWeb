@@ -7,7 +7,7 @@ export default function StatusBox() {
       </div>
 
       <div className="bg-gray-800 p-4 rounded-xl">
-        Firebase: READY
+        Talk: READY
       </div>
 
       <div className="bg-gray-800 p-4 rounded-xl">
