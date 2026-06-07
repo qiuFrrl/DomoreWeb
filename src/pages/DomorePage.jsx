@@ -37,7 +37,7 @@ export default function DomorePage({ setPage, setRobotNickname }) {
 
     await set(ref(db, `robot/account/${cleanNick}`), {
       nickname: cleanNick,
-      status: "online",
+      status: "offline",
       pairedWith: cleanCode,
     });
 
