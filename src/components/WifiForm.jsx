@@ -7,29 +7,26 @@ export default function WifiForm() {
   const [password, setPassword] = useState("");
 
   const send = async () => {
-  if (!ssid || !password) {
-    alert("Isi WiFi dulu yea ok!");
-    return;
-  }
+    if (!ssid || !password) {
+      alert("Isi WiFi dulu yea ok!");
+      return;
+    }
 
-  try {
-    await set(ref(db, "robot/wifi"), {
-      ssid: ssid,
-      password: password,
-    });
+    try {
+      await set(ref(db, "robot/wifi"), {
+        ssid,
+        password,
+      });
 
-    alert("WiFi berhasil disimpan");
-  } catch (error) {
-    alert("Error: " + error.message);
-  }
-};
+      alert("WiFi berhasil disimpan");
+    } catch (error) {
+      alert("Error: " + error.message);
+    }
+  };
 
   return (
     <div className="w-full max-w-sm bg-gray-800/80 backdrop-blur-md p-6 rounded-2xl shadow-2xl border border-gray-700">
-
-      <h2 className="text-xl font-bold text-center mb-6">
-        Connect Robot WiFi
-      </h2>
+      <h2 className="text-xl font-bold text-center mb-6">Connect Robot WiFi</h2>
 
       <div className="mb-4">
         <label className="text-sm text-gray-300">WiFi Name</label>
@@ -58,7 +55,6 @@ export default function WifiForm() {
       >
         SEND TO DOMORE
       </button>
-
     </div>
   );
 }
