@@ -5,7 +5,7 @@ import { db } from "../firebase";
 export default function TalkPage({ setPage, robotNickname }) {
   const canvasRef = useRef(null);
   const [drawing, setDrawing] = useState(false);
-  const [targetRobot, setTargetRobot] = useState("");
+  const [targetPairCode, setTargetPairCode] = useState("");
   const [tool, setTool] = useState("brush");
   const [brushSize, setBrushSize] = useState(6);
 
@@ -68,7 +68,7 @@ export default function TalkPage({ setPage, robotNickname }) {
   };
 
   const sendDrawing = async () => {
-    if (!targetRobot.trim()) return alert("Enter target robot nickname");
+    if (!targetPairCode.trim()) return alert("Enter target pairing code");
 
     const canvas = canvasRef.current;
     const offscreen = document.createElement("canvas");
@@ -86,7 +86,7 @@ export default function TalkPage({ setPage, robotNickname }) {
     try {
       await set(ref(db, `robot/canvas/${robotNickname}`), {
         from: robotNickname,
-        to: targetRobot,
+        to: targetPairCode.trim(),
         pixels,
         width: 128,
         height: 64,
@@ -126,12 +126,12 @@ export default function TalkPage({ setPage, robotNickname }) {
 
         <div className="bg-white/10 border border-white/10 backdrop-blur-2xl rounded-[28px] md:rounded-[32px] p-4 md:p-8 shadow-2xl">
           <div className="mb-6">
-            <label className="text-sm text-gray-400">Talk with :</label>
+            <label className="text-sm text-gray-400">Target Pairing Code :</label>
             <input
               type="text"
-              placeholder="target robot nickname"
-              value={targetRobot}
-              onChange={(e) => setTargetRobot(e.target.value)}
+              placeholder="enter target pairing code"
+              value={targetPairCode}
+              onChange={(e) => setTargetPairCode(e.target.value)}
               className="w-full mt-3 px-5 py-4 rounded-2xl bg-black/40 border border-white/10 text-white placeholder-gray-500 outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/40 transition"
             />
           </div>
