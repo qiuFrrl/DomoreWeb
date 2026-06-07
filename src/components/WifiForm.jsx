@@ -1,4 +1,4 @@
-import { ref, set } from "firebase/database";
+import { ref, set, get } from "firebase/database";
 import { db } from "../firebase";
 import { useState } from "react";
 
@@ -7,13 +7,13 @@ export default function WifiForm() {
   const [password, setPassword] = useState("");
 
   const send = async () => {
-    if (!ssid || !password) {
-      alert("Isi WiFi dulu yea ok!");
-      return;
-    }
+    if (!ssid || !password) return alert("Isi WiFi dulu yea ok!");
 
     try {
-      await set(ref(db, "robot/wifi"), {
+      const snap = await get(ref(db, `robot/wifi/${ssid}`));
+      if (snap.exists()) return alert("WiFi ini sudah tersimpan");
+
+      await set(ref(db, `robot/wifi/${ssid}`), {
         ssid,
         password,
       });

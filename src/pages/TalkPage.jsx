@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from "react";
-import { ref, set } from "firebase/database";
+import { ref, set, get } from "firebase/database";
 import { db } from "../firebase";
 
 export default function TalkPage({ setPage, robotNickname }) {
@@ -68,10 +68,7 @@ export default function TalkPage({ setPage, robotNickname }) {
   };
 
   const sendDrawing = async () => {
-    if (!targetRobot.trim()) {
-      alert("Enter target robot nickname");
-      return;
-    }
+    if (!targetRobot.trim()) return alert("Enter target robot nickname");
 
     const canvas = canvasRef.current;
     const offscreen = document.createElement("canvas");
@@ -86,13 +83,20 @@ export default function TalkPage({ setPage, robotNickname }) {
       pixels.push(imageData.data[i + 3] > 128 ? 1 : 0);
     }
 
+    const canvasKey = `${robotNickname}_to_${targetRobot}`;
+
     try {
-      await set(ref(db, `robot/canvas/${targetRobot}`), {
+      const snap = await get(ref(db, `robot/canvas/${canvasKey}`));
+      if (snap.exists()) return alert("Canvas ini sudah pernah dikirim, clear dulu untuk kirim ulang");
+
+      await set(ref(db, `robot/canvas/${canvasKey}`), {
         from: robotNickname,
+        to: targetRobot,
         pixels,
         width: 128,
         height: 64,
       });
+
       alert("Drawing sent!");
     } catch (e) {
       alert(e.message);
@@ -146,7 +150,7 @@ export default function TalkPage({ setPage, robotNickname }) {
                   : "bg-white/5 border-white/10 hover:bg-white/10"
               }`}
             >
-               Brush
+              ✏️ Brush
             </button>
             <button
               onClick={() => setTool("eraser")}
@@ -156,7 +160,7 @@ export default function TalkPage({ setPage, robotNickname }) {
                   : "bg-white/5 border-white/10 hover:bg-white/10"
               }`}
             >
-               Eraser
+              🧹 Eraser
             </button>
 
             <div className="flex items-center gap-3 ml-auto">
