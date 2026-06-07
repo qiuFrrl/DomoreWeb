@@ -84,7 +84,7 @@ export default function TalkPage({ setPage, robotNickname }) {
     }
 
     try {
-      await set(ref(db, `robot/canvas/${targetRobot}`), {
+      await set(ref(db, `robot/canvas/${robotNickname}`), {
         from: robotNickname,
         to: targetRobot,
         pixels,
