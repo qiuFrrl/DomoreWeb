@@ -10,13 +10,17 @@ export default function WifiForm() {
     if (!ssid || !password) return alert("Isi WiFi dulu yea ok!");
 
     try {
-      const snap = await get(ref(db, `robot/wifi/${ssid}`));
-      if (snap.exists()) return alert("WiFi ini sudah tersimpan");
+      const snap = await get(ref(db, `robot/wifi`));
+      if (snap.exists()) {
+        const allWifi = Object.values(snap.val());
+        const duplikat = allWifi.find(
+          (w) => w.ssid === ssid && w.password === password
+        );
+        if (duplikat) return alert("WiFi ini sudah tersimpan");
+      }
 
-      await set(ref(db, `robot/wifi/${ssid}`), {
-        ssid,
-        password,
-      });
+      const newRef = ref(db, `robot/wifi/${ssid}`);
+      await set(newRef, { ssid, password });
 
       alert("WiFi berhasil disimpan");
     } catch (error) {

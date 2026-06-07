@@ -12,22 +12,30 @@ export default function DomorePage({ setPage, setRobotNickname }) {
     const cleanNick = nickname.trim();
     const cleanCode = pairCode.trim();
 
-    const robotRef = ref(db, `robot/account/${cleanNick}`);
-    const robotSnap = await get(robotRef);
-
-    if (robotSnap.exists()) {
-      const data = robotSnap.val();
-
-      if (data.pairedWith !== cleanCode) {
-        return alert("Pairing code salah untuk robot ini");
+    const snap = await get(ref(db, `robot/account`));
+    if (snap.exists()) {
+      const allAccounts = Object.values(snap.val());
+      const duplikat = allAccounts.find(
+        (a) => a.nickname === cleanNick && a.pairedWith === cleanCode
+      );
+      if (duplikat) {
+        setRobotNickname(cleanNick);
+        setPage("talk");
+        return;
       }
 
-      setRobotNickname(cleanNick);
-      setPage("talk");
-      return;
+      const nickTaken = allAccounts.find(
+        (a) => a.nickname === cleanNick && a.pairedWith !== cleanCode
+      );
+      if (nickTaken) return alert("Nickname sudah dipakai dengan pairing code berbeda");
+
+      const codeTaken = allAccounts.find(
+        (a) => a.pairedWith === cleanCode && a.nickname !== cleanNick
+      );
+      if (codeTaken) return alert("Pairing code sudah dipakai oleh robot lain");
     }
 
-    await set(robotRef, {
+    await set(ref(db, `robot/account/${cleanNick}`), {
       nickname: cleanNick,
       status: "online",
       pairedWith: cleanCode,

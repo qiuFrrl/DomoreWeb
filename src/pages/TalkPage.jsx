@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from "react";
-import { ref, set, get } from "firebase/database";
+import { ref, set } from "firebase/database";
 import { db } from "../firebase";
 
 export default function TalkPage({ setPage, robotNickname }) {
@@ -83,13 +83,8 @@ export default function TalkPage({ setPage, robotNickname }) {
       pixels.push(imageData.data[i + 3] > 128 ? 1 : 0);
     }
 
-    const canvasKey = `${robotNickname}_to_${targetRobot}`;
-
     try {
-      const snap = await get(ref(db, `robot/canvas/${canvasKey}`));
-      if (snap.exists()) return alert("Canvas ini sudah pernah dikirim, clear dulu untuk kirim ulang");
-
-      await set(ref(db, `robot/canvas/${canvasKey}`), {
+      await set(ref(db, `robot/canvas/${targetRobot}`), {
         from: robotNickname,
         to: targetRobot,
         pixels,
