@@ -1,4 +1,6 @@
 import { useRef, useEffect, useState } from "react";
+import { ref, get } from "firebase/database";
+import { db } from "../firebase";
 
 export default function TalkPage({
   setPage,
@@ -10,19 +12,44 @@ export default function TalkPage({
 
   const [targetRobot, setTargetRobot] = useState("");
 
-  const [brushSize, setBrushSize] = useState(4);
+  const [brushSize, setBrushSize] = useState(2);
 
   const [tool, setTool] = useState("pen");
+
+  const [targetStatus, setTargetStatus] = useState(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
 
     const ctx = canvas.getContext("2d");
 
+    ctx.fillStyle = "#000000";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
     ctx.lineWidth = brushSize;
     ctx.lineCap = "round";
-    ctx.strokeStyle = "#00ffff";
-  }, [brushSize]);
+    ctx.strokeStyle = "#ffffff";
+  }, []);
+
+  const checkRobot = async (name) => {
+    if (!name) {
+      setTargetStatus(null);
+      return;
+    }
+
+    const snap = await get(
+      ref(db, `robot/${name}`)
+    );
+
+    if (!snap.exists()) {
+      setTargetStatus("notfound");
+      return;
+    }
+
+    const data = snap.val();
+
+    setTargetStatus(data.status || "offline");
+  };
 
   const startDraw = (e) => {
     setDrawing(true);
@@ -58,7 +85,7 @@ export default function TalkPage({
     ctx.strokeStyle =
       tool === "eraser"
         ? "#000000"
-        : "#00ffff";
+        : "#ffffff";
 
     ctx.lineTo(x, y);
 
@@ -74,7 +101,9 @@ export default function TalkPage({
 
     const ctx = canvas.getContext("2d");
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#000000";
+
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
   };
 
   const sendDrawing = () => {
@@ -143,7 +172,7 @@ export default function TalkPage({
           </h1>
 
           <p className="text-gray-400 mt-4 text-base md:text-lg">
-            Send drawings between robots in realtime.
+            Draw directly for 128x64 OLED display.
           </p>
 
         </div>
@@ -170,9 +199,13 @@ export default function TalkPage({
               type="text"
               placeholder="target robot nickname"
               value={targetRobot}
-              onChange={(e) =>
-                setTargetRobot(e.target.value)
-              }
+              onChange={(e) => {
+                const value = e.target.value;
+
+                setTargetRobot(value);
+
+                checkRobot(value);
+              }}
               className="
                 w-full
                 mt-3
@@ -189,6 +222,41 @@ export default function TalkPage({
                 transition
               "
             />
+
+            {targetStatus && (
+              <div className="mt-4 flex items-center gap-3">
+
+                {targetStatus === "notfound" ? (
+                  <p className="text-red-400 font-medium">
+                    Robot not found
+                  </p>
+                ) : (
+                  <>
+                    <div
+                      className={`
+                        w-3 h-3 rounded-full animate-pulse
+                        ${
+                          targetStatus === "online"
+                            ? "bg-green-400"
+                            : "bg-red-400"
+                        }
+                      `}
+                    />
+
+                    <p
+                      className={
+                        targetStatus === "online"
+                          ? "text-green-400 font-medium"
+                          : "text-red-400 font-medium"
+                      }
+                    >
+                      {targetStatus}
+                    </p>
+                  </>
+                )}
+
+              </div>
+            )}
 
           </div>
 
@@ -230,8 +298,8 @@ export default function TalkPage({
 
               <input
                 type="range"
-                min="2"
-                max="30"
+                min="1"
+                max="6"
                 value={brushSize}
                 onChange={(e) =>
                   setBrushSize(Number(e.target.value))
@@ -255,21 +323,22 @@ export default function TalkPage({
               bg-black
               shadow-lg
               shadow-cyan-500/10
+              flex justify-center
             "
           >
 
             <canvas
               ref={canvasRef}
-              width={1000}
-              height={500}
+              width={128}
+              height={64}
               className="
                 w-full
-                h-[300px]
-                sm:h-[400px]
-                md:h-[500px]
+                aspect-[2/1]
+                max-h-[420px]
                 touch-none
                 select-none
                 cursor-crosshair
+                image-rendering-pixelated
               "
               onMouseDown={startDraw}
               onMouseUp={endDraw}
