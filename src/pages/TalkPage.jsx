@@ -8,6 +8,7 @@ export default function TalkPage({ setPage, robotNickname }) {
   const [targetNickname, setTargetNickname] = useState("");
   const [tool, setTool] = useState("brush");
   const [brushSize, setBrushSize] = useState(6);
+  const [targetStatus, setTargetStatus] = useState(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -15,6 +16,18 @@ export default function TalkPage({ setPage, robotNickname }) {
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
   }, []);
+
+  const checkTarget = async (nick) => {
+    if (!nick.trim()) { setTargetStatus(null); return; }
+    try {
+      const snap = await get(ref(db, `robot/account/${nick.trim()}`));
+      if (!snap.exists()) { setTargetStatus("notfound"); return; }
+      const status = snap.val().status;
+      setTargetStatus(status === "online" ? "online" : "offline");
+    } catch {
+      setTargetStatus(null);
+    }
+  };
 
   const getCtx = () => {
     const ctx = canvasRef.current.getContext("2d");
@@ -68,42 +81,52 @@ export default function TalkPage({ setPage, robotNickname }) {
   };
 
   const sendDrawing = async () => {
-  if (!targetNickname.trim()) return alert("Enter target nickname");
+    if (!targetNickname.trim()) return alert("Enter target nickname");
+    if (targetStatus === "notfound") return alert("Nickname tidak ditemukan");
+    if (targetStatus === "offline") return alert("Robot sedang offline");
+    if (targetStatus !== "online") return alert("Cek status robot dulu");
 
-  try {
-    const targetSnap = await get(ref(db, `robot/account/${targetNickname.trim()}`));
-    if (!targetSnap.exists()) return alert("Nickname tidak ditemukan");
+    try {
+      const targetSnap = await get(ref(db, `robot/account/${targetNickname.trim()}`));
+      if (!targetSnap.exists()) return alert("Nickname tidak ditemukan");
 
-    const targetPairCode = targetSnap.val().pairedWith;
+      const targetPairCode = targetSnap.val().pairedWith;
 
-    const canvas = canvasRef.current;
-    const offscreen = document.createElement("canvas");
-    offscreen.width = 128;
-    offscreen.height = 64;
-    const ctx2 = offscreen.getContext("2d");
-    ctx2.drawImage(canvas, 0, 0, 128, 64);
+      const canvas = canvasRef.current;
+      const offscreen = document.createElement("canvas");
+      offscreen.width = 128;
+      offscreen.height = 64;
+      const ctx2 = offscreen.getContext("2d");
+      ctx2.drawImage(canvas, 0, 0, 128, 64);
 
-    const imageData = ctx2.getImageData(0, 0, 128, 64);
-    const pixels = [];
-    for (let i = 0; i < imageData.data.length; i += 4) {
-      pixels.push(imageData.data[i + 3] > 128 ? 1 : 0);
+      const imageData = ctx2.getImageData(0, 0, 128, 64);
+      const pixels = [];
+      for (let i = 0; i < imageData.data.length; i += 4) {
+        pixels.push(imageData.data[i + 3] > 128 ? 1 : 0);
+      }
+
+      const canvasKey = `${robotNickname}_to_${targetPairCode}`;
+
+      await set(ref(db, `robot/canvas/${canvasKey}`), {
+        from: robotNickname,
+        to: targetPairCode,
+        pixels,
+        width: 128,
+        height: 64,
+      });
+
+      alert("Drawing sent!");
+    } catch (e) {
+      alert(e.message);
     }
+  };
 
-    const canvasKey = `${robotNickname}_to_${targetPairCode}`;
+  const statusConfig = {
+    online:   { label: "Online",        dot: "bg-green-400",  text: "text-green-400"  },
+    offline:  { label: "Offline",       dot: "bg-red-400",    text: "text-red-400"    },
+    notfound: { label: "Tidak ditemukan", dot: "bg-gray-400", text: "text-gray-400"   },
+  };
 
-    await set(ref(db, `robot/canvas/${canvasKey}`), {
-      from: robotNickname,
-      to: targetPairCode,
-      pixels,
-      width: 128,
-      height: 64,
-    });
-
-    alert("Drawing sent!");
-  } catch (e) {
-    alert(e.message);
-  }
-};
   return (
     <div className="min-h-screen bg-black text-white relative overflow-hidden">
       <div className="absolute top-[-200px] left-[-150px] w-[500px] h-[500px] bg-cyan-500/20 blur-3xl rounded-full" />
@@ -137,9 +160,22 @@ export default function TalkPage({ setPage, robotNickname }) {
               type="text"
               placeholder="target robot nickname"
               value={targetNickname}
-              onChange={(e) => setTargetNickname(e.target.value)}
+              onChange={(e) => {
+                setTargetNickname(e.target.value);
+                setTargetStatus(null);
+              }}
+              onBlur={(e) => checkTarget(e.target.value)}
               className="w-full mt-3 px-5 py-4 rounded-2xl bg-black/40 border border-white/10 text-white placeholder-gray-500 outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/40 transition"
             />
+
+            {targetStatus && statusConfig[targetStatus] && (
+              <div className="flex items-center gap-2 mt-3 px-1">
+                <span className={`w-2.5 h-2.5 rounded-full ${statusConfig[targetStatus].dot} animate-pulse`} />
+                <span className={`text-sm font-semibold ${statusConfig[targetStatus].text}`}>
+                  {statusConfig[targetStatus].label}
+                </span>
+              </div>
+            )}
           </div>
 
           <div className="flex flex-wrap items-center gap-3 mb-4">
