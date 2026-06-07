@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from "react";
-import { ref, set } from "firebase/database";
+import { ref, set, get } from "firebase/database";
 import { db } from "../firebase";
 
 export default function TalkPage({ setPage, robotNickname }) {
@@ -70,20 +70,30 @@ export default function TalkPage({ setPage, robotNickname }) {
   const sendDrawing = async () => {
     if (!targetPairCode.trim()) return alert("Enter target pairing code");
 
-    const canvas = canvasRef.current;
-    const offscreen = document.createElement("canvas");
-    offscreen.width = 128;
-    offscreen.height = 64;
-    const ctx2 = offscreen.getContext("2d");
-    ctx2.drawImage(canvas, 0, 0, 128, 64);
-
-    const imageData = ctx2.getImageData(0, 0, 128, 64);
-    const pixels = [];
-    for (let i = 0; i < imageData.data.length; i += 4) {
-      pixels.push(imageData.data[i + 3] > 128 ? 1 : 0);
-    }
-
     try {
+      const accountSnap = await get(ref(db, "robot/account"));
+      if (!accountSnap.exists()) return alert("Tidak ada akun terdaftar");
+
+      const allAccounts = Object.values(accountSnap.val());
+      const targetExists = allAccounts.find(
+        (a) => a.pairedWith === targetPairCode.trim()
+      );
+
+      if (!targetExists) return alert("Pairing code tidak ditemukan");
+
+      const canvas = canvasRef.current;
+      const offscreen = document.createElement("canvas");
+      offscreen.width = 128;
+      offscreen.height = 64;
+      const ctx2 = offscreen.getContext("2d");
+      ctx2.drawImage(canvas, 0, 0, 128, 64);
+
+      const imageData = ctx2.getImageData(0, 0, 128, 64);
+      const pixels = [];
+      for (let i = 0; i < imageData.data.length; i += 4) {
+        pixels.push(imageData.data[i + 3] > 128 ? 1 : 0);
+      }
+
       await set(ref(db, `robot/canvas/${robotNickname}`), {
         from: robotNickname,
         to: targetPairCode.trim(),
