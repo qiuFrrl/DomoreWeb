@@ -5,7 +5,7 @@ import { db } from "../firebase";
 export default function TalkPage({ setPage, robotNickname }) {
   const canvasRef = useRef(null);
   const [drawing, setDrawing] = useState(false);
-  const [targetPairCode, setTargetPairCode] = useState("");
+  const [targetNickname, setTargetNickname] = useState("");
   const [tool, setTool] = useState("brush");
   const [brushSize, setBrushSize] = useState(6);
 
@@ -68,18 +68,13 @@ export default function TalkPage({ setPage, robotNickname }) {
   };
 
   const sendDrawing = async () => {
-    if (!targetPairCode.trim()) return alert("Enter target pairing code");
+    if (!targetNickname.trim()) return alert("Enter target nickname");
 
     try {
-      const accountSnap = await get(ref(db, "robot/account"));
-      if (!accountSnap.exists()) return alert("Tidak ada akun terdaftar");
+      const targetSnap = await get(ref(db, `robot/account/${targetNickname.trim()}`));
+      if (!targetSnap.exists()) return alert("Nickname tidak ditemukan");
 
-      const allAccounts = Object.values(accountSnap.val());
-      const targetExists = allAccounts.find(
-        (a) => a.pairedWith === targetPairCode.trim()
-      );
-
-      if (!targetExists) return alert("Pairing code tidak ditemukan");
+      const targetPairCode = targetSnap.val().pairedWith;
 
       const canvas = canvasRef.current;
       const offscreen = document.createElement("canvas");
@@ -96,7 +91,7 @@ export default function TalkPage({ setPage, robotNickname }) {
 
       await set(ref(db, `robot/canvas/${robotNickname}`), {
         from: robotNickname,
-        to: targetPairCode.trim(),
+        to: targetPairCode,
         pixels,
         width: 128,
         height: 64,
@@ -136,12 +131,12 @@ export default function TalkPage({ setPage, robotNickname }) {
 
         <div className="bg-white/10 border border-white/10 backdrop-blur-2xl rounded-[28px] md:rounded-[32px] p-4 md:p-8 shadow-2xl">
           <div className="mb-6">
-            <label className="text-sm text-gray-400">Target Pairing Code :</label>
+            <label className="text-sm text-gray-400">Talk with :</label>
             <input
               type="text"
-              placeholder="enter target pairing code"
-              value={targetPairCode}
-              onChange={(e) => setTargetPairCode(e.target.value)}
+              placeholder="target robot nickname"
+              value={targetNickname}
+              onChange={(e) => setTargetNickname(e.target.value)}
               className="w-full mt-3 px-5 py-4 rounded-2xl bg-black/40 border border-white/10 text-white placeholder-gray-500 outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/40 transition"
             />
           </div>
