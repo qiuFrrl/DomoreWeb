@@ -68,41 +68,42 @@ export default function TalkPage({ setPage, robotNickname }) {
   };
 
   const sendDrawing = async () => {
-    if (!targetNickname.trim()) return alert("Enter target nickname");
+  if (!targetNickname.trim()) return alert("Enter target nickname");
 
-    try {
-      const targetSnap = await get(ref(db, `robot/account/${targetNickname.trim()}`));
-      if (!targetSnap.exists()) return alert("Nickname tidak ditemukan");
+  try {
+    const targetSnap = await get(ref(db, `robot/account/${targetNickname.trim()}`));
+    if (!targetSnap.exists()) return alert("Nickname tidak ditemukan");
 
-      const targetPairCode = targetSnap.val().pairedWith;
+    const targetPairCode = targetSnap.val().pairedWith;
 
-      const canvas = canvasRef.current;
-      const offscreen = document.createElement("canvas");
-      offscreen.width = 128;
-      offscreen.height = 64;
-      const ctx2 = offscreen.getContext("2d");
-      ctx2.drawImage(canvas, 0, 0, 128, 64);
+    const canvas = canvasRef.current;
+    const offscreen = document.createElement("canvas");
+    offscreen.width = 128;
+    offscreen.height = 64;
+    const ctx2 = offscreen.getContext("2d");
+    ctx2.drawImage(canvas, 0, 0, 128, 64);
 
-      const imageData = ctx2.getImageData(0, 0, 128, 64);
-      const pixels = [];
-      for (let i = 0; i < imageData.data.length; i += 4) {
-        pixels.push(imageData.data[i + 3] > 128 ? 1 : 0);
-      }
-
-      await set(ref(db, `robot/canvas/${robotNickname}`), {
-        from: robotNickname,
-        to: targetPairCode,
-        pixels,
-        width: 128,
-        height: 64,
-      });
-
-      alert("Drawing sent!");
-    } catch (e) {
-      alert(e.message);
+    const imageData = ctx2.getImageData(0, 0, 128, 64);
+    const pixels = [];
+    for (let i = 0; i < imageData.data.length; i += 4) {
+      pixels.push(imageData.data[i + 3] > 128 ? 1 : 0);
     }
-  };
 
+    const canvasKey = `${robotNickname}_to_${targetPairCode}`;
+
+    await set(ref(db, `robot/canvas/${canvasKey}`), {
+      from: robotNickname,
+      to: targetPairCode,
+      pixels,
+      width: 128,
+      height: 64,
+    });
+
+    alert("Drawing sent!");
+  } catch (e) {
+    alert(e.message);
+  }
+};
   return (
     <div className="min-h-screen bg-black text-white relative overflow-hidden">
       <div className="absolute top-[-200px] left-[-150px] w-[500px] h-[500px] bg-cyan-500/20 blur-3xl rounded-full" />
