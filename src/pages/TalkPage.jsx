@@ -151,7 +151,7 @@ export default function TalkPage({ setPage, robotNickname }) {
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-black leading-tight bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 bg-clip-text text-transparent">
             Talk with Domore's
           </h1>
-          <p className="text-gray-400 mt-4 text-base md:text-lg">Send drawings between robots in realtime.</p>
+          <p className="text-gray-400 mt-4 text-base md:text-lg">have fun gng</p>
         </div>
 
         <div className="bg-white/10 border border-white/10 backdrop-blur-2xl rounded-[28px] md:rounded-[32px] p-4 md:p-8 shadow-2xl">
@@ -188,7 +188,7 @@ export default function TalkPage({ setPage, robotNickname }) {
                   : "bg-white/5 border-white/10 hover:bg-white/10"
               }`}
             >
-              ✏️ Brush
+              Brush
             </button>
             <button
               onClick={() => setTool("eraser")}
@@ -198,7 +198,7 @@ export default function TalkPage({ setPage, robotNickname }) {
                   : "bg-white/5 border-white/10 hover:bg-white/10"
               }`}
             >
-              🧹 Eraser
+              Eraser
             </button>
 
             <div className="flex items-center gap-3 ml-auto">

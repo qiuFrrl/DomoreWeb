@@ -57,9 +57,29 @@ export default function DomorePage({ setPage, setRobotNickname }) {
       </button>
 
       <div className="w-full max-w-md bg-white/10 backdrop-blur-2xl border border-white/10 rounded-3xl p-8 shadow-2xl">
-        <h1 className="text-4xl font-black text-center mb-8 bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
-          DOMORE'S
-        </h1>
+        
+      <div className="mb-10 text-center">
+        <div className="relative inline-block">
+          <h1 className="text-4xl sm:text-5xl font-black bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
+            DOMORE'S
+          </h1>
+          <svg
+            className="absolute"
+            style={{ left: "38%", transform: "translateX(-50%)", top: "100%" }}
+            width="40"
+            height="20"
+            viewBox="0 0 40 20"
+          >
+          <path d="M5 5 Q20 18 35 5" stroke="url(#mouth)" strokeWidth="3" fill="none" strokeLinecap="round"/>
+          <defs>
+          <linearGradient id="mouth" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="#22d3ee"/>
+          <stop offset="100%" stopColor="#a855f7"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+</div>
 
         <input
           value={nickname}
@@ -81,6 +101,7 @@ export default function DomorePage({ setPage, setRobotNickname }) {
         >
           PAIR & ENTER
         </button>
+
       </div>
     </div>
   );
