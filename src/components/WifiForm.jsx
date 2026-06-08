@@ -32,13 +32,13 @@ export default function WifiForm() {
   };
 
   return (
-    <div className="w-full max-w-sm bg-gray-800/80 backdrop-blur-md p-6 rounded-2xl shadow-2xl border border-gray-700">
-      <h2 className="text-xl font-bold text-center mb-6">Connect Robot WiFi</h2>
+    <div className="console-panel rise-in-delay w-full max-w-md rounded-lg border border-white/10 bg-white/[0.07] p-5 shadow-[0_24px_80px_rgba(0,0,0,0.45)] backdrop-blur-xl sm:p-6">
+      <h2 className="mb-6 text-center text-xl font-black">Connect Robot WiFi</h2>
 
       <div className="mb-4">
-        <label className="text-sm text-gray-300">WiFi Name</label>
+        <label className="text-sm font-medium text-white/65">WiFi Name</label>
         <input
-          className="w-full mt-1 p-3 rounded-lg bg-gray-900 text-white outline-none focus:ring-2 focus:ring-green-500"
+          className="mt-2 w-full rounded-md border border-white/10 bg-black/45 p-3 text-white outline-none transition placeholder:text-white/30 focus:border-emerald-300/70 focus:ring-2 focus:ring-emerald-300/25"
           placeholder="Enter SSID"
           value={ssid}
           onChange={(e) => setSsid(e.target.value)}
@@ -46,10 +46,10 @@ export default function WifiForm() {
       </div>
 
       <div className="mb-6">
-        <label className="text-sm text-gray-300">Password</label>
+        <label className="text-sm font-medium text-white/65">Password</label>
         <input
           type="password"
-          className="w-full mt-1 p-3 rounded-lg bg-gray-900 text-white outline-none focus:ring-2 focus:ring-green-500"
+          className="mt-2 w-full rounded-md border border-white/10 bg-black/45 p-3 text-white outline-none transition placeholder:text-white/30 focus:border-emerald-300/70 focus:ring-2 focus:ring-emerald-300/25"
           placeholder="Enter Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -58,7 +58,7 @@ export default function WifiForm() {
 
       <button
         onClick={send}
-        className="w-full bg-green-500 hover:bg-green-400 transition py-3 rounded-lg font-semibold"
+        className="w-full rounded-md bg-gradient-to-r from-emerald-400 via-lime-300 to-amber-300 py-3 font-black text-black shadow-[0_14px_34px_rgba(52,211,153,0.18)] transition hover:-translate-y-0.5 hover:brightness-110 active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lime-200/50"
       >
         SEND TO DOMORE
       </button>
