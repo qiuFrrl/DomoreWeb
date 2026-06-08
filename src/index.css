@@ -298,3 +298,9 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+@keyframes drawMouth {
+  to {
+    stroke-dashoffset: 0;
+  }
+}

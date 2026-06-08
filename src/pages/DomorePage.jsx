@@ -67,25 +67,36 @@ export default function DomorePage({ setPage, setRobotNickname }) {
                 Pairing room
               </p>
               <h1 className="bg-gradient-to-r from-emerald-300 via-lime-200 to-amber-300 bg-clip-text text-4xl font-black text-transparent sm:text-5xl">
-                DOMORE'S
-              </h1>
-              <svg
-                className="absolute"
-                style={{ left: "38%", transform: "translateX(-50%)", top: "100%" }}
-                width="40"
-                height="20"
-                viewBox="0 0 40 20"
-              >
-                <path d="M5 5 Q20 18 35 5" stroke="url(#mouth)" strokeWidth="3" fill="none" strokeLinecap="round"/>
-                <defs>
-                  <linearGradient id="mouth" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0%" stopColor="#6ee7b7"/>
-                    <stop offset="100%" stopColor="#fbbf24"/>
-                  </linearGradient>
-                </defs>
-              </svg>
-            </div>
-          </div>
+              DOMORE'S
+    </h1>
+    <svg
+      className="absolute"
+      style={{ left: "38%", transform: "translateX(-50%)", top: "100%" }}
+      width="40"
+      height="20"
+      viewBox="0 0 40 20"
+    >
+      <path
+        d="M5 5 Q20 18 35 5"
+        stroke="url(#mouth)"
+        strokeWidth="3"
+        fill="none"
+        strokeLinecap="round"
+        style={{
+          strokeDasharray: 40,
+          strokeDashoffset: 40,
+          animation: "drawMouth 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards"
+        }}
+      />
+      <defs>
+        <linearGradient id="mouth" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="#6ee7b7"/>
+          <stop offset="100%" stopColor="#fbbf24"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+</div>
 
           <input
             value={nickname}
