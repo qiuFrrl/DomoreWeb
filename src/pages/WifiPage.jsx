@@ -8,7 +8,7 @@ export default function WifiPage({ setPage }) {
 
       <button
         onClick={() => setPage("menu")}
-        className="absolute left-5 top-5 z-10 rounded-md border border-white/10 bg-white/[0.06] px-4 py-2 text-sm text-white/72 backdrop-blur transition hover:border-lime-200/40 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lime-200/40"
+        className="absolute left-5 top-5 z-20 rounded-md border border-white/10 bg-white/[0.06] px-4 py-2 text-sm text-white/72 backdrop-blur transition hover:border-lime-200/40 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lime-200/40"
       >
         Back
       </button>
