@@ -11,7 +11,7 @@ export default function MenuPage({ setPage }) {
       <div className="relative z-10 flex min-h-screen w-full flex-col items-center justify-center px-5 pb-28 pt-16 sm:pb-20">
         <div className="rise-in flex flex-col items-center text-center">
           <div className="soft-float mb-6 grid h-14 w-14 place-items-center rounded-lg border border-lime-200/30 bg-white/[0.06] text-2xl font-black text-lime-200 shadow-[0_18px_60px_rgba(0,0,0,0.45)]">
-            DMR
+            RF
           </div>
           <p className="mb-3 text-xs font-semibold uppercase text-lime-100/55">
             Domore robot console

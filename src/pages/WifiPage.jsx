@@ -16,7 +16,7 @@ export default function WifiPage({ setPage }) {
       <div className="relative z-10 flex min-h-screen flex-col items-center justify-center py-20">
         <div className="rise-in mb-7 text-center">
           <p className="mb-2 text-xs font-semibold uppercase text-emerald-100/55">
-            ROBODESK LINK
+            Save WiFi
           </p>
           <h1 className="text-4xl font-black leading-tight sm:text-5xl">
             WiFi Configuration
