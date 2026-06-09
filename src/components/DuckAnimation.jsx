@@ -105,6 +105,13 @@ export default function DuckAnimation() {
         set("tail", { cx: 17 - sh });
       }
 
+      const bmoRider = el("bmo-rider");
+      if (bmoRider) {
+        const bodyCy = parseFloat(el("body")?.getAttribute("cy") || 62);
+        const yOfs = bodyCy - 62;
+        bmoRider.setAttribute("transform", `translate(13.5, ${3 + yOfs}) scale(1.3)`);
+      }
+
       wrapEl.style.left = s.x + "px";
     };
 
@@ -167,6 +174,26 @@ export default function DuckAnimation() {
           <svg ref={svgRef} viewBox="0 0 80 90" width="40" height="45" xmlns="http://www.w3.org/2000/svg">
             <ellipse id="body" cx="40" cy="62" rx="26" ry="18" fill="#34d399"/>
             <ellipse id="wing" cx="44" cy="62" rx="13" ry="9" fill="#10b981" transform="rotate(-10 44 62)"/>
+            
+            <g id="bmo-rider" transform="translate(13.5, 3) scale(1.3)">
+              <line x1="15" y1="5.5" x2="15" y2="2.5" stroke="#022c22" strokeWidth="1.2" strokeLinecap="round" />
+              <circle cx="15" cy="1.5" r="1.5" fill="#fbbf24" stroke="#022c22" strokeWidth="0.8" />
+              <rect x="6" y="5.5" width="23" height="27" rx="3.5" fill="#6ee7b7" stroke="#022c22" strokeWidth="1.5" />
+              <rect x="2" y="7" width="5" height="23" rx="1.5" fill="#10b981" stroke="#022c22" strokeWidth="1.2" />
+              <rect x="10.5" y="8" width="18" height="10" rx="2" fill="#ecfdf5" stroke="#022c22" strokeWidth="1" />
+              <circle cx="15.5" cy="12" r="1.6" fill="#022c22" />
+              <circle cx="23.5" cy="12" r="1.6" fill="#022c22" />
+              <path d="M17 15.5 Q19.5 18 22 15.5" stroke="#022c22" strokeWidth="1" strokeLinecap="round" fill="none" />
+              <circle cx="13.5" cy="14.5" r="2" fill="#fda4af" opacity="0.3" />
+              <circle cx="25.5" cy="14.5" r="2" fill="#fda4af" opacity="0.3" />
+              <rect x="12" y="21.5" width="7" height="2" rx="0.5" fill="#022c22" />
+              <rect x="14.5" y="19" width="2" height="7" rx="0.5" fill="#022c22" />
+              <circle cx="25.5" cy="21.5" r="1.8" fill="#f43f5e" stroke="#022c22" strokeWidth="0.6" />
+              <circle cx="25.5" cy="26" r="1.8" fill="#38bdf8" stroke="#022c22" strokeWidth="0.6" />
+              <line x1="14" y1="32.5" x2="22" y2="34" stroke="#022c22" strokeWidth="3.5" strokeLinecap="round" />
+              <line x1="20" y1="32.5" x2="28" y2="34" stroke="#022c22" strokeWidth="3.5" strokeLinecap="round" />
+            </g>
+
             <ellipse id="neck" cx="55" cy="47" rx="8" ry="11" fill="#34d399"/>
             <circle id="head" cx="57" cy="36" r="12" fill="#6ee7b7"/>
             <circle cx="61" cy="33" r="2.2" fill="#1c1917"/>

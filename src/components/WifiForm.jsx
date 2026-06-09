@@ -1,6 +1,7 @@
 import { ref, set, get } from "firebase/database";
 import { db } from "../firebase";
 import { useState } from "react";
+import WifiBmo from "./WifiBmo";
 
 export default function WifiForm() {
   const [ssid, setSsid] = useState("");
@@ -36,7 +37,12 @@ export default function WifiForm() {
       <h2 className="mb-6 text-center text-xl font-black">Connect Robot WiFi</h2>
 
       <div className="mb-4">
-        <label className="text-sm font-medium text-white/65">WiFi Name</label>
+        <div className="relative flex items-center justify-between">
+          <label className="text-sm font-medium text-white/65">WiFi Name</label>
+          <div className="absolute bottom-0 right-2 pointer-events-none translate-y-[6px]">
+            <WifiBmo />
+          </div>
+        </div>
         <input
           className="mt-2 w-full rounded-md border border-white/10 bg-black/45 p-3 text-white outline-none transition placeholder:text-white/30 focus:border-emerald-300/70 focus:ring-2 focus:ring-emerald-300/25"
           placeholder="Enter SSID"

@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 import { ref, set, get } from "firebase/database";
 import { db } from "../firebase";
+import SittingBmos from "../components/SittingBmos";
 
 export default function TalkPage({ setPage, robotNickname }) {
   const canvasRef = useRef(null);
@@ -158,9 +159,11 @@ export default function TalkPage({ setPage, robotNickname }) {
           <p className="mt-4 text-base text-white/52 md:text-lg">have fun gng</p>
         </div>
 
-        <div className="console-panel rise-in-delay rounded-lg border border-white/10 bg-white/[0.07] p-4 shadow-[0_24px_80px_rgba(0,0,0,0.45)] backdrop-blur-xl md:p-8">
-          <div className="mb-6">
-            <label className="text-sm font-medium text-white/65">Talk with :</label>
+        <div className="relative rise-in-delay">
+          <SittingBmos />
+          <div className="console-panel rounded-lg border border-white/10 bg-white/[0.07] p-4 shadow-[0_24px_80px_rgba(0,0,0,0.45)] backdrop-blur-xl md:p-8">
+            <div className="mb-6">
+              <label className="text-sm font-medium text-white/65">Talk with :</label>
             <input
               type="text"
               placeholder="target robot nickname"
@@ -222,7 +225,7 @@ export default function TalkPage({ setPage, robotNickname }) {
             </div>
           </div>
 
-          <div className="overflow-hidden rounded-lg border border-lime-200/20 bg-black shadow-[0_20px_60px_rgba(0,0,0,0.46)]">
+          <div className="relative overflow-hidden rounded-lg border border-lime-200/20 bg-black shadow-[0_20px_60px_rgba(0,0,0,0.46)]">
             <canvas
               ref={canvasRef}
               width={1280}
@@ -262,6 +265,7 @@ export default function TalkPage({ setPage, robotNickname }) {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

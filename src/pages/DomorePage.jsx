@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ref, set, get } from "firebase/database";
 import { db } from "../firebase";
+import BmoAnimation from "../components/BmoAnimation";
 
 export default function DomorePage({ setPage, setRobotNickname }) {
   const [nickname, setNickname] = useState("");
@@ -49,6 +50,7 @@ export default function DomorePage({ setPage, setRobotNickname }) {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-[#080907] px-4 text-white">
+      <BmoAnimation />
       <div className="animated-grid absolute inset-0 opacity-70" />
       <div className="signal-sweep" />
 
