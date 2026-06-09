@@ -107,13 +107,13 @@ function SittingBmo({ flip = false, side = "left", messageText }) {
             initial={{ opacity: 0, y: 4, scale: 0.6 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, scale: 0.7 }}
-            className={`absolute bottom-full whitespace-nowrap rounded-md bg-white px-2.5 py-1.5 text-xs font-bold leading-none text-emerald-900 shadow-md z-10 ${
+            className={`absolute bottom-full w-max max-w-[140px] whitespace-normal sm:max-w-none sm:whitespace-nowrap rounded-md bg-white px-2.5 py-1.5 text-xs font-bold leading-tight text-emerald-900 shadow-md z-10 ${
               bubbleOnRight ? "right-0 mb-2" : "left-0 mb-2"
             }`}
           >
-            <span className="flex items-center gap-[4px] font-sans">
-              <Sparkles className="h-3 w-3 text-emerald-500" />
-              {message}
+            <span className="flex items-start sm:items-center gap-[4px] font-sans text-left">
+              <Sparkles className="mt-[1px] sm:mt-0 h-3 w-3 text-emerald-500 shrink-0" />
+              <span className="break-words">{message}</span>
             </span>
             {bubbleOnRight ? (
               <svg className="absolute -bottom-[5px] right-[10px]" width="10" height="6" viewBox="0 0 10 6" fill="none">
