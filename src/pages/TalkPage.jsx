@@ -82,46 +82,56 @@ export default function TalkPage({ setPage, robotNickname }) {
   };
 
   const sendDrawing = async () => {
-    if (!targetNickname.trim()) return alert("Enter target nickname");
-    if (targetStatus === "notfound") return alert("Nickname tidak ditemukan");
-    if (targetStatus === "offline") return alert("Robot sedang offline");
-    if (targetStatus !== "online") return alert("Cek status robot dulu");
+  if (!targetNickname.trim()) return alert("Enter target nickname");
+  if (targetStatus === "notfound") return alert("Nickname tidak ditemukan");
+  if (targetStatus === "offline") return alert("Robot sedang offline");
+  if (targetStatus !== "online") return alert("Cek status robot dulu");
 
-    try {
-      const targetSnap = await get(ref(db, `robot/account/${targetNickname.trim()}`));
-      if (!targetSnap.exists()) return alert("Nickname tidak ditemukan");
+  try {
+    const targetSnap = await get(ref(db, `robot/account/${targetNickname.trim()}`));
+    if (!targetSnap.exists()) return alert("Nickname tidak ditemukan");
 
-      const targetPairCode = targetSnap.val().pairedWith;
+    const targetPairCode = targetSnap.val().pairedWith;
 
-      const canvas = canvasRef.current;
-      const offscreen = document.createElement("canvas");
-      offscreen.width = 128;
-      offscreen.height = 64;
-      const ctx2 = offscreen.getContext("2d");
-      ctx2.drawImage(canvas, 0, 0, 128, 64);
+    const canvas = canvasRef.current;
+    const offscreen = document.createElement("canvas");
+    offscreen.width = 128;
+    offscreen.height = 64;
+    const ctx2 = offscreen.getContext("2d");
+    ctx2.drawImage(canvas, 0, 0, 128, 64);
 
-      const imageData = ctx2.getImageData(0, 0, 128, 64);
-      const pixels = [];
-      for (let i = 0; i < imageData.data.length; i += 4) {
-        pixels.push(imageData.data[i + 3] > 128 ? 1 : 0);
-      }
+    const imageData = ctx2.getImageData(0, 0, 128, 64);
 
-      const canvasKey = `${robotNickname}_to_${targetPairCode}`;
-
-      await set(ref(db, `robot/canvas/${canvasKey}`), {
-        from: robotNickname,
-        to: targetPairCode,
-        pixels,
-        width: 128,
-        height: 64,
-        updatedAt: Date.now(),
-      });
-
-      alert("Drawing sent!");
-    } catch (e) {
-      alert(e.message);
+    const bits = [];
+    for (let i = 0; i < imageData.data.length; i += 4) {
+      bits.push(imageData.data[i + 3] > 128 ? 1 : 0);
     }
-  };
+
+    let hexStr = "";
+    for (let i = 0; i < bits.length; i += 8) {
+      let byte = 0;
+      for (let b = 0; b < 8; b++) {
+        byte |= (bits[i + b] || 0) << b;
+      }
+      hexStr += byte.toString(16).padStart(2, "0");
+    }
+
+    const canvasKey = `${robotNickname}_to_${targetPairCode}`;
+
+    await set(ref(db, `robot/canvas/${canvasKey}`), {
+      from: robotNickname,
+      to: targetPairCode,
+      pixels: hexStr,
+      width: 128,
+      height: 64,
+      updatedAt: Date.now(),
+    });
+
+    alert("Drawing sent!");
+  } catch (e) {
+    alert(e.message);
+  }
+};
 
   const statusConfig = {
     online:   { label: "Online",         dot: "bg-green-400", text: "text-green-400" },
