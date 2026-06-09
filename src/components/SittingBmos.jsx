@@ -286,7 +286,7 @@ export default function SittingBmos() {
   }, []);
 
   return (
-    <div className="absolute bottom-full right-4 md:right-80 flex items-end pointer-events-none z-20 translate-y-[2px]">
+    <div className="absolute bottom-full right-1/4 md:right-80 flex items-end pointer-events-none z-20 translate-y-[2px]">
       <SittingBmo flip side="left" messageText={msg2} />
       
       <div className="ml-1">
