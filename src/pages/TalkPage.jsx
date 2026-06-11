@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from "react";
-import { ref, set, get } from "firebase/database";
+import { ref, set, get, onValue } from "firebase/database";
 import { db } from "../firebase";
 import SittingBmos from "../components/SittingBmos";
 
@@ -7,9 +7,11 @@ export default function TalkPage({ setPage, robotNickname }) {
   const canvasRef = useRef(null);
   const [drawing, setDrawing] = useState(false);
   const [targetNickname, setTargetNickname] = useState("");
+  const [activeTarget, setActiveTarget] = useState("");
   const [tool, setTool] = useState("brush");
   const [brushSize, setBrushSize] = useState(6);
   const [targetStatus, setTargetStatus] = useState(null);
+  const [lastSeenMs, setLastSeenMs] = useState(0);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -18,17 +20,53 @@ export default function TalkPage({ setPage, robotNickname }) {
     ctx.lineJoin = "round";
   }, []);
 
-  const checkTarget = async (nick) => {
-    if (!nick.trim()) { setTargetStatus(null); return; }
-    try {
-      const snap = await get(ref(db, `robot/account/${nick.trim()}`));
-      if (!snap.exists()) { setTargetStatus("notfound"); return; }
-      const status = snap.val().status;
-      setTargetStatus(status === "online" ? "online" : "offline");
-    } catch {
+  useEffect(() => {
+    let unsubscribe = null;
+    let interval = null;
+
+    if (!activeTarget.trim()) {
       setTargetStatus(null);
+      return;
     }
-  };
+
+    const HEARTBEAT_TIMEOUT_MS = 120000; // 2 menit
+    const accountRef = ref(db, `robot/account/${activeTarget.trim()}`);
+    let currentUpdatedAt = 0;
+
+    const evaluateStatus = () => {
+      if (!currentUpdatedAt) return;
+      const elapsed = Date.now() - currentUpdatedAt;
+      const isOnline = elapsed < HEARTBEAT_TIMEOUT_MS;
+      
+      setTargetStatus(isOnline ? "online" : "offline");
+      setLastSeenMs(elapsed);
+    };
+
+    unsubscribe = onValue(accountRef, (snapshot) => {
+      if (!snapshot.exists()) {
+        setTargetStatus("notfound");
+        currentUpdatedAt = 0;
+        return;
+      }
+      const data = snapshot.val();
+      if (data && data.updatedAt) {
+        currentUpdatedAt = data.updatedAt;
+        evaluateStatus();
+      } else {
+        setTargetStatus(data?.status === "online" ? "online" : "offline");
+      }
+    }, (error) => {
+      console.error(error);
+      setTargetStatus(null);
+    });
+
+    interval = setInterval(evaluateStatus, 30000);
+
+    return () => {
+      if (unsubscribe) unsubscribe();
+      if (interval) clearInterval(interval);
+    };
+  }, [activeTarget]);
 
   const getCtx = () => {
     const ctx = canvasRef.current.getContext("2d");
@@ -181,8 +219,9 @@ export default function TalkPage({ setPage, robotNickname }) {
               onChange={(e) => {
                 setTargetNickname(e.target.value);
                 setTargetStatus(null);
+                setActiveTarget("");
               }}
-              onBlur={(e) => checkTarget(e.target.value)}
+              onBlur={(e) => setActiveTarget(e.target.value)}
               className="mt-3 w-full rounded-md border border-white/10 bg-black/45 px-5 py-4 text-white outline-none transition placeholder:text-white/30 focus:border-emerald-300/70 focus:ring-2 focus:ring-emerald-300/25"
             />
 
@@ -191,6 +230,11 @@ export default function TalkPage({ setPage, robotNickname }) {
                 <span className={`w-2.5 h-2.5 rounded-full ${statusConfig[targetStatus].dot} animate-pulse`} />
                 <span className={`text-sm font-semibold ${statusConfig[targetStatus].text}`}>
                   {statusConfig[targetStatus].label}
+                  {targetStatus === "offline" && lastSeenMs > 0 && (
+                    <span className="ml-2 text-xs font-normal text-white/50">
+                      (Last seen: {Math.floor(lastSeenMs / 60000)} menit yang lalu)
+                    </span>
+                  )}
                 </span>
               </div>
             )}
