@@ -37,7 +37,7 @@ export default function DomorePage({ setPage, setRobotNickname }) {
       if (codeTaken) return alert("Pairing code sudah dipakai oleh robot lain");
     }
 
-    await set(ref(db, `robot/account/${cleanNick}`), {
+    await set(ref(db, `robot/account/${cleanCode}`), {
       nickname: cleanNick,
       status: "offline",
       pairedWith: cleanCode,
