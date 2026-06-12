@@ -154,7 +154,7 @@ export default function TalkPage({ setPage, robotNickname }) {
       hexStr += byte.toString(16).padStart(2, "0");
     }
 
-    const canvasKey = `${robotNickname}_to_${targetPairCode}`;
+    const canvasKey = `${targetPairCode}`;
 
     await set(ref(db, `robot/canvas/${canvasKey}`), {
       from: robotNickname,
