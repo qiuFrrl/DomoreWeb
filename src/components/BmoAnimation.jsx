@@ -453,16 +453,16 @@ export default function BmoAnimation() {
         >
           <defs>
             <linearGradient id="bmoBody" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#6ee7b7" />
-              <stop offset="100%" stopColor="#34d399" />
+              <stop offset="0%" stopColor="#a3e635" />
+              <stop offset="100%" stopColor="#a3e635" />
             </linearGradient>
             <linearGradient id="bmoSide" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#10b981" />
-              <stop offset="100%" stopColor="#059669" />
+              <stop offset="0%" stopColor="#65a30d" />
+              <stop offset="100%" stopColor="#65a30d" />
             </linearGradient>
             <linearGradient id="bmoScreen" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="#ecfdf5" />
-              <stop offset="100%" stopColor="#d1fae5" />
+              <stop offset="100%" stopColor="#ecfdf5" />
             </linearGradient>
           </defs>
 

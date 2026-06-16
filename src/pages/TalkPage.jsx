@@ -181,7 +181,7 @@ export default function TalkPage({ setPage, robotNickname }) {
     <div className="relative min-h-screen overflow-hidden bg-[#080907] text-white">
       <div className="animated-grid absolute inset-0 opacity-60" />
       <div className="signal-sweep" />
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-lime-200/70 to-transparent" />
+      <div className="absolute inset-x-0 top-0 h-px bg-lime-400/50" />
 
       <div className="relative z-10 mx-auto flex min-h-screen max-w-6xl flex-col px-4 py-5 sm:px-6 md:py-8">
         <div className="mb-8 flex items-center justify-between md:mb-10">
@@ -201,7 +201,7 @@ export default function TalkPage({ setPage, robotNickname }) {
           <p className="mb-2 text-xs font-semibold uppercase text-emerald-100/55">
             Canvas channel
           </p>
-          <h1 className="bg-gradient-to-r from-emerald-300 via-lime-200 to-amber-300 bg-clip-text text-4xl font-black leading-tight text-transparent sm:text-5xl md:text-6xl">
+          <h1 className="text-lime-400 text-4xl font-black leading-tight sm:text-5xl md:text-6xl">
             Talk with Domore's
           </h1>
           <p className="mt-4 text-base text-white/52 md:text-lg">have fun gng</p>
@@ -312,7 +312,7 @@ export default function TalkPage({ setPage, robotNickname }) {
             </button>
             <button
               onClick={sendDrawing}
-              className="rounded-md bg-gradient-to-r from-emerald-400 via-lime-300 to-amber-300 py-4 text-lg font-black text-black shadow-[0_14px_34px_rgba(52,211,153,0.18)] transition hover:-translate-y-0.5 hover:brightness-110 active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lime-200/50"
+              className="rounded-md bg-lime-400 py-4 text-lg font-black text-black shadow-[0_14px_34px_rgba(163,230,53,0.18)] transition hover:-translate-y-0.5 hover:brightness-110 active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lime-200/50"
             >
               SEND DRAWING
             </button>

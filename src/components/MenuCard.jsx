@@ -1,8 +1,8 @@
 const colorClasses = {
-  green: "border-emerald-300/25 from-emerald-400/18 via-white/[0.05] to-black/20 hover:border-emerald-200/60 focus-visible:ring-emerald-200/40",
-  blue: "border-amber-300/25 from-amber-300/16 via-white/[0.05] to-black/20 hover:border-amber-200/60 focus-visible:ring-amber-200/40",
-  red: "border-red-300/25 from-red-400/16 via-white/[0.05] to-black/20 hover:border-red-200/60 focus-visible:ring-red-200/40",
-  yellow: "border-lime-300/25 from-lime-300/16 via-white/[0.05] to-black/20 hover:border-lime-200/60 focus-visible:ring-lime-200/40",
+  green: "border-emerald-300/25 bg-emerald-400/10 hover:border-emerald-200/60 focus-visible:ring-emerald-200/40",
+  blue: "border-amber-300/25 bg-amber-400/10 hover:border-amber-200/60 focus-visible:ring-amber-200/40",
+  red: "border-red-300/25 bg-red-400/10 hover:border-red-200/60 focus-visible:ring-red-200/40",
+  yellow: "border-lime-300/25 bg-lime-400/10 hover:border-lime-200/60 focus-visible:ring-lime-200/40",
 };
 
 const accentClasses = {
@@ -18,13 +18,13 @@ export default function MenuCard({ title, subtitle, color, onClick }) {
       onClick={onClick}
       className={`
         signal-card group relative min-h-[150px] w-full overflow-hidden rounded-lg
-        border bg-gradient-to-br p-5 text-left text-white shadow-[0_24px_70px_rgba(0,0,0,0.38)]
+        border p-5 text-left text-white shadow-[0_24px_70px_rgba(0,0,0,0.38)]
         transition duration-300 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2
         ${colorClasses[color] ?? colorClasses.green}
       `}
     >
       <span className={`absolute left-0 top-0 h-full w-1 ${accentClasses[color] ?? accentClasses.green}`} />
-      <span className="absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-white/70 to-transparent" />
+      <span className="absolute inset-x-5 top-0 h-px bg-white/20" />
       <span className="relative z-10 flex min-h-[110px] flex-col justify-between">
         <span className="text-xs font-semibold uppercase text-white/45">
           ROBODESK

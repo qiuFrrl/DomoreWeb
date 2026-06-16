@@ -6,7 +6,7 @@ export default function MenuPage({ setPage }) {
     <div className="relative min-h-screen overflow-hidden bg-[#080907] text-white">
       <div className="animated-grid absolute inset-0 opacity-80" />
       <div className="signal-sweep" />
-      <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-emerald-400/10 to-transparent" />
+      <div className="absolute inset-x-0 top-0 h-48" />
 
       <div className="relative z-10 flex min-h-screen w-full flex-col items-center justify-center px-5 pb-28 pt-16 sm:pb-20">
         <div className="rise-in flex flex-col items-center text-center">

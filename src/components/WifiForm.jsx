@@ -64,7 +64,7 @@ export default function WifiForm() {
 
       <button
         onClick={send}
-        className="w-full rounded-md bg-gradient-to-r from-emerald-400 via-lime-300 to-amber-300 py-3 font-black text-black shadow-[0_14px_34px_rgba(52,211,153,0.18)] transition hover:-translate-y-0.5 hover:brightness-110 active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lime-200/50"
+        className="w-full rounded-md bg-lime-400 py-3 font-black text-black shadow-[0_14px_34px_rgba(163,230,53,0.18)] transition hover:-translate-y-0.5 hover:brightness-110 active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lime-200/50"
       >
         SEND TO DOMORE
       </button>

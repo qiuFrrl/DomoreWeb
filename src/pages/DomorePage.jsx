@@ -68,7 +68,7 @@ export default function DomorePage({ setPage, setRobotNickname }) {
               <p className="mb-2 text-xs font-semibold uppercase text-emerald-100/55">
                 Pairing room
               </p>
-              <h1 className="bg-gradient-to-r from-emerald-300 via-lime-200 to-amber-300 bg-clip-text text-4xl font-black text-transparent sm:text-5xl">
+              <h1 className="text-lime-400 text-4xl font-black sm:text-5xl">
               DOMORE'S
     </h1>
     <svg
@@ -80,7 +80,7 @@ export default function DomorePage({ setPage, setRobotNickname }) {
     >
       <path
         d="M5 5 Q20 18 35 5"
-        stroke="url(#mouth)"
+        stroke="#a3e635"
         strokeWidth="3"
         fill="none"
         strokeLinecap="round"
@@ -90,12 +90,6 @@ export default function DomorePage({ setPage, setRobotNickname }) {
           animation: "drawMouth 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards"
         }}
       />
-      <defs>
-        <linearGradient id="mouth" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor="#6ee7b7"/>
-          <stop offset="100%" stopColor="#fbbf24"/>
-        </linearGradient>
-      </defs>
     </svg>
   </div>
 </div>
@@ -116,7 +110,7 @@ export default function DomorePage({ setPage, setRobotNickname }) {
 
           <button
             onClick={pairAndEnter}
-            className="w-full rounded-md bg-gradient-to-r from-emerald-400 via-lime-300 to-amber-300 py-4 text-lg font-black text-black shadow-[0_14px_34px_rgba(52,211,153,0.18)] transition hover:-translate-y-0.5 hover:brightness-110 active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lime-200/50"
+            className="w-full rounded-md bg-lime-400 py-4 text-lg font-black text-black shadow-[0_14px_34px_rgba(163,230,53,0.18)] transition hover:-translate-y-0.5 hover:brightness-110 active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lime-200/50"
           >
             PAIR & ENTER
           </button>

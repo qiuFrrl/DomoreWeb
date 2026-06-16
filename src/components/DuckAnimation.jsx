@@ -168,7 +168,7 @@ export default function DuckAnimation() {
 
   return (
     <div className="pointer-events-none absolute bottom-0 left-0 w-full">
-      <div className="absolute bottom-0 left-0 h-px w-full bg-gradient-to-r from-transparent via-lime-200/35 to-transparent" />
+      <div className="absolute bottom-0 left-0 h-px w-full bg-lime-400/30" />
       <div ref={stageRef} className="relative h-16 w-full overflow-hidden">
         <div ref={wrapRef} className="absolute bottom-0 [&.flipped]:scale-x-[-1]" style={{ left: 200, width: 40, height: 45 }}>
           <svg ref={svgRef} viewBox="0 0 80 90" width="40" height="45" xmlns="http://www.w3.org/2000/svg">
