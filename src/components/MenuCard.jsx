@@ -27,7 +27,7 @@ export default function MenuCard({ title, subtitle, color, onClick }) {
       <span className="absolute inset-x-5 top-0 h-px bg-white/20" />
       <span className="relative z-10 flex min-h-[110px] flex-col justify-between">
         <span className="text-xs font-semibold uppercase text-white/45">
-          ROBODESK
+          ...
         </span>
         <span>
           <h2 className="text-2xl font-black leading-tight">{title}</h2>
